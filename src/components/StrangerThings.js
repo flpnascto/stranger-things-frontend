@@ -102,16 +102,30 @@ class StrangerThings extends React.Component {
     );
   }
 
-  render() {
-    const {
-      hereIsTheUpsideDownWorld, characterName, characters, page,
-    } = this.state;
+  renderHeader() {
     return (
-      <div
-        className={ `reality ${getRealityClass(
-          hereIsTheUpsideDownWorld,
-        )}` }
-      >
+      <tr>
+        <th>Nome</th>
+        <th>Origem</th>
+        <th>Status</th>
+      </tr>
+    );
+  }
+
+  renderCharacters(char) {
+    return (
+      <tr key={ char.name }>
+        <td>{char.name}</td>
+        <td>{char.origin}</td>
+        <td>{char.status}</td>
+      </tr>
+    );
+  }
+
+  render() {
+    const { hereIsTheUpsideDownWorld, characterName, characters, page } = this.state;
+    return (
+      <div className={ `reality ${getRealityClass(hereIsTheUpsideDownWorld)}` }>
         <div className="content strangerfy">
           <div className="change-reality">
             <button type="button" onClick={ this.changeRealityClick }>
@@ -119,7 +133,6 @@ class StrangerThings extends React.Component {
               Mudar de Realidade
             </button>
           </div>
-
           <div>
             <input
               placeholder="Nome do Personagem"
@@ -128,28 +141,16 @@ class StrangerThings extends React.Component {
             />
             <button type="button" onClick={ this.searchClick }>Pesquisar</button>
           </div>
-
           <div>
             <table>
               <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Origem</th>
-                  <th>Status</th>
-                </tr>
+                {this.renderHeader()}
               </thead>
               <tbody>
-                {characters.map((char) => (
-                  <tr key={ char.name }>
-                    <td>{char.name}</td>
-                    <td>{char.origin}</td>
-                    <td>{char.status}</td>
-                  </tr>
-                ))}
+                {characters.map(this.renderCharacters)}
               </tbody>
             </table>
           </div>
-
           <div>
             <p>
               Página atual:
